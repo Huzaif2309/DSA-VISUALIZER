@@ -16,7 +16,7 @@ const [algorithm, setAlgorithm] = useState([]);
       <Routes>
         <Route path='/' element={<Home setAlgorithm={setAlgorithm}/>} />
         <Route path='/Visualizer' element={<Visualizer algorithm={algorithm} setAlgorithm={setAlgorithm} />} />
-        <Route path='/Login' element={<Loginform />} />
+        {/* <Route path='/Login' element={<Loginform />} /> */}
       </Routes>
     </div>
   )

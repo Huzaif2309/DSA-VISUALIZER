@@ -81,7 +81,7 @@ function Navbar({ algorithm, setAlgorithm }) {
               <NavLink className="flex items-center hover:text-blue-600 " to="/Visualizer"><Activity />&nbsp;<span>Visualizer</span></NavLink>
             </div>
 
-            <NavLink className="rounded-md p-1 border text-[15px] flex items-center text-blue-500 hover:text-blue-400" to="/Login"><span>Login</span>&nbsp;<LogIn /></NavLink>
+            {/* <NavLink className="rounded-md p-1 border text-[15px] flex items-center text-blue-500 hover:text-blue-400" to="/Login"><span>Login</span>&nbsp;<LogIn /></NavLink> */}
 
             <motion.div
               ref={searchRef}
