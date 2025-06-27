@@ -727,7 +727,7 @@ function Home({setAlgorithm}) {
                 <div className='flex flex-col text-white space-y-5'>
                   <h1 className='text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500'>Connect</h1>
                   <div className='flex  space-x-5'>
-                   <a href="https://github.com/sumedhudupa/DSA-Visualizer"> <Github className='bg-gray-800  w-10 h-10 p-2 rounded-md' /> </a>
+                   <a href="https://github.com/sumedhudupa"> <Github className='bg-gray-800  w-10 h-10 p-2 rounded-md' /> </a>
                     <a href="https://www.linkedin.com/"> <Linkedin className='bg-gray-800  w-10 h-10 p-2 rounded-md' /> </a>
                     <Mail className='bg-gray-800 cursor-pointer w-10 h-10 p-2 rounded-md' />
                     <Twitter className='bg-gray-800 cursor-pointer w-10 h-10 p-2 rounded-md' />
