@@ -3,6 +3,7 @@ import algoIcon from "../assets/icon.png";
 import { NavLink, useNavigate } from 'react-router'
 import { House, Activity, Search, LogIn } from 'lucide-react';
 import { motion,useMotionTemplate,useMotionValue,animate, easeInOut } from "motion/react"
+import DSAChatbot from "./DSAChatbot"; // Import the chatbot component
 
 
 function Navbar({ algorithm, setAlgorithm }) {
@@ -73,13 +74,16 @@ function Navbar({ algorithm, setAlgorithm }) {
       <nav className="pb-2 relative z-50 " >
         {/* desktop view */}
         <div className="hidden lg:block w-full ">
-          <motion.div className="container m-auto w-[40rem] flex justify-around items-center font-bold rounded-xl gap-2 py-4 text-white text-lg  " style={{ backgroundImage, boxShadow }}>
+          <motion.div className="container m-auto w-[50rem] flex justify-around items-center font-bold rounded-xl gap-2 py-4 text-white text-lg  " style={{ backgroundImage, boxShadow }}>
             <img src={algoIcon} className="w-10 h-10" alt="Algorithm Visualizer" />
             <div className="flex gap-10 rounded-md text-[15px]">
               <NavLink className="flex items-center hover:text-blue-600 " to="/"><House />&nbsp;<span>Home</span></NavLink>
               <label ref={labelRef} htmlFor="search1" className="flex items-center cursor-pointer hover:text-blue-600" onClick={() => setShowSearch(!showSearch)}><Search />&nbsp;<span>Search</span></label>
               <NavLink className="flex items-center hover:text-blue-600 " to="/Visualizer"><Activity />&nbsp;<span>Visualizer</span></NavLink>
             </div>
+
+            {/* DSA Chatbot Component */}
+            <DSAChatbot />
 
             {/* <NavLink className="rounded-md p-1 border text-[15px] flex items-center text-blue-500 hover:text-blue-400" to="/Login"><span>Login</span>&nbsp;<LogIn /></NavLink> */}
 
@@ -128,7 +132,11 @@ function Navbar({ algorithm, setAlgorithm }) {
             <NavLink className="font-bold flex flex-col gap-1 items-center hover:text-blue-600 " to="/"><House /> <span className="text-[12px]">Home</span></NavLink>
             <label htmlFor="search" onClick={() => setShowSearch(!showSearch)} className="font-bold  flex flex-col gap-1 items-center hover:text-blue-600 "><Search /><span className="text-[12px]">Search</span></label>
             <NavLink className="font-bold  flex flex-col gap-1 items-center hover:text-blue-600 " to="/Visualizer"><Activity /> <span className="text-[12px]">Visualizer</span></NavLink>
-            <NavLink className="font-bold flex flex-col gap-1 items-center hover:text-blue-600 " to="/Login"><LogIn /> <span className="text-[12px]">Login</span></NavLink>
+            
+            {/* DSA Chatbot for mobile - simplified version */}
+            <div className="font-bold flex flex-col gap-1 items-center hover:text-blue-600">
+              <DSAChatbot />
+            </div>
           </motion.div>
 
           <motion.div
