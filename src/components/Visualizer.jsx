@@ -285,6 +285,8 @@ function Visualizer({ algorithm, setAlgorithm }) {
                         arr={arr}
                         setArr={setArr}
                         setSteps={setSteps}
+                        queue={queue}
+                        setQueue={setQueue}
                     />
                     
                     {/* Pseudocode for Controller - shown below controller */}

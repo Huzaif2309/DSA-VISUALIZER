@@ -19,7 +19,6 @@ const DSAChatbot = () => {
   const inputRef = useRef(null);
   const chatContentRef = useRef(null);
 
-
   const systemInstruction = `You are a distinguished and highly experienced Data Structures and Algorithms (DSA) instructor with expertise in computer science education.
 
 **Core Responsibilities:**

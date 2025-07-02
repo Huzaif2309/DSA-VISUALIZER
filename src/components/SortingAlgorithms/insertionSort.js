@@ -1,41 +1,46 @@
 export function* insertionSortGenerator(array) {
     const getArr = [...array];
+    const n = getArr.length;
     const sortedIndices = new Set();
 
-    for (let i = 1; i < getArr.length; i++) {
+    for (let i = 1; i < n; i++) {
         let key = getArr[i];
         let j = i - 1;
-
-        while (j >= 0 && getArr[j] > key) {
+        // Compare key with each element on the left
+        while (j >= 0) {
             yield {
                 array: [...getArr],
                 compare: [j, j + 1],
-                swap: [j, j + 1],
+                swap: [],
                 sorted: [...sortedIndices]
             };
-            getArr[j + 1] = getArr[j];
-            j--;
+            if (getArr[j] > key) {
+                getArr[j + 1] = getArr[j];
+                yield {
+                    array: [...getArr],
+                    compare: [j, j + 1],
+                    swap: [j, j + 1],
+                    sorted: [...sortedIndices]
+                };
+                j--;
+            } else {
+                break;
+            }
         }
         getArr[j + 1] = key;
-
         yield {
             array: [...getArr],
-            compare: [],
-            swap: [j + 1],
+            compare: [j + 1, i],
+            swap: [j + 1, i],
             sorted: [...sortedIndices]
         };
-
         sortedIndices.add(i);
     }
-
-    for (let i = 0; i < getArr.length; i++) {
-        sortedIndices.add(i);
-    }
-
+    // Mark all as sorted at the end
     yield {
         array: [...getArr],
         compare: [],
         swap: [],
-        sorted: [...sortedIndices]
+        sorted: Array.from({ length: n }, (_, i) => i)
     };
 }

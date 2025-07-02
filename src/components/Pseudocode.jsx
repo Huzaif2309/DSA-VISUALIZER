@@ -99,7 +99,6 @@ end procedure`
 function Pseudocode({ algorithm }) {
     if (!algorithm) return null;
 
-    // Special case for Knapsack: show formula and explanation
     if (algorithm === "Knapsack") {
         return (
             <div className="shadow-md mt-2 shadow-white p-2 w-[95%] mb-3 md:w-[90%] m-auto rounded-lg">

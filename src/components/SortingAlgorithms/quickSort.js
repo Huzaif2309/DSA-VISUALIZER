@@ -1,14 +1,7 @@
 export function* quickSortGenerator(array) {
     const getArr = [...array];
+    const n = getArr.length;
     const sortedIndices = new Set();
-
-    function* quickSortHelper(low, high) {
-        if (low < high) {
-            let pivotIndex = yield* partition(low, high);
-            yield* quickSortHelper(low, pivotIndex - 1);
-            yield* quickSortHelper(pivotIndex + 1, high);
-        }
-    }
 
     function* partition(low, high) {
         let pivot = getArr[high];
@@ -25,32 +18,43 @@ export function* quickSortGenerator(array) {
                 [getArr[i], getArr[j]] = [getArr[j], getArr[i]];
                 yield {
                     array: [...getArr],
-                    compare: [],
+                    compare: [i, j],
                     swap: [i, j],
                     sorted: [...sortedIndices]
                 };
             }
         }
         [getArr[i + 1], getArr[high]] = [getArr[high], getArr[i + 1]];
-        sortedIndices.add(i + 1);
         yield {
             array: [...getArr],
-            compare: [],
+            compare: [i + 1, high],
             swap: [i + 1, high],
             sorted: [...sortedIndices]
         };
         return i + 1;
     }
 
-    yield* quickSortHelper(0, getArr.length - 1);
-
-    for (let i = 0; i < getArr.length; i++) {
-        sortedIndices.add(i);
+    function* quickSort(low, high) {
+        if (low < high) {
+            const piGen = partition(low, high);
+            let piResult = piGen.next();
+            let pi;
+            while (!piResult.done) {
+                yield piResult.value;
+                piResult = piGen.next();
+            }
+            pi = piResult.value;
+            yield* quickSort(low, pi - 1);
+            yield* quickSort(pi + 1, high);
+        }
     }
+
+    yield* quickSort(0, n - 1);
+    // Mark all as sorted at the end
     yield {
         array: [...getArr],
         compare: [],
         swap: [],
-        sorted: [...sortedIndices]
+        sorted: Array.from({ length: n }, (_, i) => i)
     };
 }

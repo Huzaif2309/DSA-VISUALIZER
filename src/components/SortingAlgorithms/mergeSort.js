@@ -1,60 +1,65 @@
 export function* mergeSortGenerator(array) {
     const getArr = [...array];
+    const n = getArr.length;
     const sortedIndices = new Set();
 
-    function* mergeSortHelper(left, right) {
-        if (left >= right) return;
-        let mid = Math.floor((left + right) / 2);
-        yield* mergeSortHelper(left, mid);
-        yield* mergeSortHelper(mid + 1, right);
-        yield* merge(left, mid, right);
-    }
-
-    function* merge(left, mid, right) {
-        let temp = [];
-        let i = left, j = mid + 1;
-
-        while (i <= mid && j <= right) {
+    function* merge(start, mid, end) {
+        let left = getArr.slice(start, mid + 1);
+        let right = getArr.slice(mid + 1, end + 1);
+        let i = 0, j = 0, k = start;
+        while (i < left.length && j < right.length) {
             yield {
                 array: [...getArr],
-                compare: [i, j],
+                compare: [start + i, mid + 1 + j],
                 swap: [],
                 sorted: [...sortedIndices]
             };
-            if (getArr[i] <= getArr[j]) {
-                temp.push(getArr[i++]);
+            if (left[i] <= right[j]) {
+                getArr[k++] = left[i++];
             } else {
-                temp.push(getArr[j++]);
+                getArr[k++] = right[j++];
             }
-        }
-
-        while (i <= mid) temp.push(getArr[i++]);
-        while (j <= right) temp.push(getArr[j++]);
-
-        for (let k = left; k <= right; k++) {
-            getArr[k] = temp[k - left];
             yield {
                 array: [...getArr],
                 compare: [],
-                swap: [k],
+                swap: [k - 1],
                 sorted: [...sortedIndices]
             };
         }
-
-        for (let k = left; k <= right; k++) {
-            sortedIndices.add(k);
+        while (i < left.length) {
+            getArr[k++] = left[i++];
+            yield {
+                array: [...getArr],
+                compare: [],
+                swap: [k - 1],
+                sorted: [...sortedIndices]
+            };
+        }
+        while (j < right.length) {
+            getArr[k++] = right[j++];
+            yield {
+                array: [...getArr],
+                compare: [],
+                swap: [k - 1],
+                sorted: [...sortedIndices]
+            };
         }
     }
 
-    yield* mergeSortHelper(0, getArr.length - 1);
-
-    for (let i = 0; i < getArr.length; i++) {
-        sortedIndices.add(i);
+    function* mergeSort(start, end) {
+        if (start >= end) return;
+        const mid = Math.floor((start + end) / 2);
+        yield* mergeSort(start, mid);
+        yield* mergeSort(mid + 1, end);
+        yield* merge(start, mid, end);
     }
+
+    yield* mergeSort(0, n - 1);
+    // Mark all as sorted at the end
     yield {
         array: [...getArr],
         compare: [],
         swap: [],
-        sorted: [...sortedIndices]
+        sorted: Array.from({ length: n }, (_, i) => i)
     };
 }

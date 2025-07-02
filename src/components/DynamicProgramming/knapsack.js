@@ -9,7 +9,7 @@ export function* knapsackGenerator(items, capacity) {
     });
 
     const n = Array.isArray(items) ? items.length : 0;
-    const cap = Number(capacity); // Always convert to number
+    const cap = Number(capacity);
     if (n === 0 || isNaN(cap) || cap <= 0) {
         yield { dp: [[0]], i: 0, w: 0, selected: false };
         return;

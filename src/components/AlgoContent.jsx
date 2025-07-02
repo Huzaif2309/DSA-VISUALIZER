@@ -173,11 +173,11 @@ A linked list is a linear data structure where elements (nodes) are linked using
 ❌ Slower Access Time: Random access is not possible (O(n) time for searching).
 ❌ Complex Implementation: Compared to arrays, more pointer handling is required.
     `,
-        timeComplexity: {
-            best: "O(1)",
-            worst: "O(n)",
-            average: "O(n)"
-        },
+        "timeComplexity": {
+        "best": "O(1) for insertion/deletion at ends (head/tail)",
+        "worst": "O(n) for search/access or insertion/deletion in middle/end (without tail pointer)",
+        "average": "O(n) for search/access"
+    },
         usage: ["Dynamic memory allocation", "Efficient insertions, Efficient memory management"]
 
 
@@ -226,9 +226,60 @@ A stack is a linear data structure following the Last In, First Out (LIFO) princ
         "average": "O(n) for search"
     },
     "usage": ["Function calls (Recursion)", "Expression evaluation", "Undo/Redo operations"]
-    }
+    },
+    "Knapsack": {
+    "code": `
+1. What is the Knapsack Problem?
+The Knapsack Problem is a classic optimization problem where you must maximize the total value of items placed in a knapsack of limited capacity.
 
+2. Advantages of Dynamic Programming Solution
+✅ Finds the optimal solution for the 0/1 Knapsack problem.
+✅ Efficient for moderate input sizes.
+✅ Demonstrates dynamic programming principles.
 
+3. Disadvantages
+❌ Uses O(nW) space and time (n = items, W = capacity).
+❌ Not practical for very large capacities.
+❌ Only works for integer weights/capacities.
+`,
+    "timeComplexity": {
+        "best": "O(nW)",
+        "worst": "O(nW)",
+        "average": "O(nW)"
+    },
+    "usage": [
+        "Resource allocation problems",
+        "Budget management",
+        "Cargo loading optimization"
+    ]
+},
+"Queue": {
+    "code": `
+1. What is a Queue?
+A queue is a linear data structure that follows the First In, First Out (FIFO) principle.
+
+2. Advantages of Queue
+✅ Simple and easy to implement.
+✅ Efficient O(1) time for enqueue and dequeue operations.
+✅ Useful for scheduling and buffering.
+
+3. Disadvantages of Queue
+❌ Limited access: Only front and rear elements can be accessed.
+❌ Fixed size in static (array-based) queues.
+❌ No random access: Searching takes O(n) time.
+`,
+    "timeComplexity": {
+        "best": "O(1) for enqueue/dequeue",
+        "worst": "O(n) for search",
+        "average": "O(n) for search"
+    },
+    "usage": [
+        "Task scheduling",
+        "Breadth-first search (BFS)",
+        "Buffer management",
+        "Print/job queues"
+    ]
+},
 
 };
 
@@ -267,4 +318,4 @@ function Pseudocodecopy({ algorithm }) {
     return <PseudocodeCard algorithm={algorithm} data={pseudocodeData[algorithm]} />;
 }
 
-export default Pseudocodecopy;  
+export default Pseudocodecopy;
