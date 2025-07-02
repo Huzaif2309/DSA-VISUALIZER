@@ -80,7 +80,7 @@ function Sidebar({ algorithm, setAlgorithm, raceMode, setRaceMode,setAlgorithmTy
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: sortDropdown ? 1 : 0, y: sortDropdown ? 0 : -10 }}
                             onClick={() => handleAlgorithmSelection(algo.key)}
-                            className={`p-2 rounded-md text-gray-700 hover:bg-gray-900 hover:text-white cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : ""} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
+                            className={`p-2 rounded-md text-white hover:bg-gray-900 hover:text-white cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : ""} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
                             {algo.name} {!supportedAlgorithms.includes(algo.key) && " Not Implemented"}
                         </motion.li>
@@ -106,7 +106,7 @@ function Sidebar({ algorithm, setAlgorithm, raceMode, setRaceMode,setAlgorithmTy
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: searchDropdown ? 1 : 0, y: searchDropdown ? 0 : -10 }}
                             onClick={() => handleAlgorithmSelection(algo.key)}
-                            className={` p-2 rounded-md  text-gray-700 hover:bg-gray-900 hover:text-white  cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : "hover:bg-gray-100"} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
+                            className={` p-2 rounded-md  text-white hover:bg-gray-900 hover:text-white  cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : "hover:bg-gray-100"} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
                             {algo.name} {!supportedAlgorithms.includes(algo.key) && " Not Implemented"}
                         </motion.li>
@@ -118,16 +118,16 @@ function Sidebar({ algorithm, setAlgorithm, raceMode, setRaceMode,setAlgorithmTy
                 Data Structures
             </button>
             <motion.div initial={false} animate={{ height: dataStructureDropdown ? "auto" : "0px", opacity: dataStructureDropdown ? 1 : 0 }} transition={{ duration: 0.5 }} className="flex flex-col gap-5 rounded-md overflow-hidden">
-            <button className="p-1 rounded-md text-gray-700 hover:bg-gray-900 hover:text-white cursor-pointer transition" initial={{ opacity: 0, y: -10 }} animate={{ opacity: dataStructureDropdown ? 1 : 0, y: dataStructureDropdown ? 0 : -10 }} onClick={() => { setAlgorithmType("stack");  setAlgorithm([]); setRaceMode(false); handleAlgorithmSelection("Stack") }}>
+            <button className="p-1 rounded-md text-white hover:bg-gray-900 hover:text-white cursor-pointer transition" initial={{ opacity: 0, y: -10 }} animate={{ opacity: dataStructureDropdown ? 1 : 0, y: dataStructureDropdown ? 0 : -10 }} onClick={() => { setAlgorithmType("stack");  setAlgorithm([]); setRaceMode(false); handleAlgorithmSelection("Stack") }}>
                 Stack
             </button>
-            <button className="p-1 rounded-md text-gray-700 hover:bg-gray-900 hover:text-white cursor-pointer transition" initial={{ opacity: 0, y: -10 }} animate={{ opacity: dataStructureDropdown ? 1 : 0, y: dataStructureDropdown ? 0 : -10 }} onClick={() => { setAlgorithmType("queue"); setAlgorithm([]); setRaceMode(false); handleAlgorithmSelection("Queue") }}>
+            <button className="p-1 rounded-md text-white hover:bg-gray-900 hover:text-white cursor-pointer transition" initial={{ opacity: 0, y: -10 }} animate={{ opacity: dataStructureDropdown ? 1 : 0, y: dataStructureDropdown ? 0 : -10 }} onClick={() => { setAlgorithmType("queue"); setAlgorithm([]); setRaceMode(false); handleAlgorithmSelection("Queue") }}>
                 Queue
             </button>
-            <button  className="p-1 rounded-md text-gray-700 hover:bg-gray-900 hover:text-white cursor-pointer transition" initial={{ opacity: 0, y: -10 }} animate={{ opacity: dataStructureDropdown ? 1 : 0, y: dataStructureDropdown ? 0 : -10 }} onClick={() => { setAlgorithmType("linkedlist"); setAlgorithm([]); setRaceMode(false); handleAlgorithmSelection("Linked List") }}>
+            <button  className="p-1 rounded-md text-white hover:bg-gray-900 hover:text-white cursor-pointer transition" initial={{ opacity: 0, y: -10 }} animate={{ opacity: dataStructureDropdown ? 1 : 0, y: dataStructureDropdown ? 0 : -10 }} onClick={() => { setAlgorithmType("linkedlist"); setAlgorithm([]); setRaceMode(false); handleAlgorithmSelection("Linked List") }}>
                 Linked List
             </button>
-            <button className="p-1 rounded-md text-gray-700 hover:bg-gray-900 hover:text-white cursor-pointer transition" initial={{ opacity: 0, y: -10 }} animate={{ opacity: dataStructureDropdown ? 1 : 0, y: dataStructureDropdown ? 0 : -10 }} onClick={() => { setAlgorithmType("array"); setAlgorithm([]); setRaceMode(false); handleAlgorithmSelection("Array")}}>
+            <button className="p-1 rounded-md text-white hover:bg-gray-900 hover:text-white cursor-pointer transition" initial={{ opacity: 0, y: -10 }} animate={{ opacity: dataStructureDropdown ? 1 : 0, y: dataStructureDropdown ? 0 : -10 }} onClick={() => { setAlgorithmType("array"); setAlgorithm([]); setRaceMode(false); handleAlgorithmSelection("Array")}}>
                 Array
             </button>
             </motion.div>
@@ -149,7 +149,7 @@ function Sidebar({ algorithm, setAlgorithm, raceMode, setRaceMode,setAlgorithmTy
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: graphDropdown ? 1 : 0, y: graphDropdown ? 0 : -10 }}
                             onClick={() => handleAlgorithmSelection(algo.key)}
-                            className={` p-2 rounded-md  text-gray-700 hover:bg-gray-900 hover:text-white  cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : "hover:bg-gray-100"} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
+                            className={` p-2 rounded-md  text-white hover:bg-gray-900 hover:text-white  cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : "hover:bg-gray-100"} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
                             {algo.name} {!supportedAlgorithms.includes(algo.key) && "Coming Soon"}
                         </motion.li>
@@ -173,7 +173,7 @@ function Sidebar({ algorithm, setAlgorithm, raceMode, setRaceMode,setAlgorithmTy
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: dynamicProgrammingDropdown ? 1 : 0, y: dynamicProgrammingDropdown ? 0 : -10 }}
                             onClick={() => handleAlgorithmSelection(algo.key)}
-                            className={` p-2 rounded-md  text-gray-700 hover:bg-gray-900 hover:text-white  cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : "hover:bg-gray-100"} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
+                            className={` p-2 rounded-md  text-white hover:bg-gray-900 hover:text-white  cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : "hover:bg-gray-100"} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
                             {algo.name} {!supportedAlgorithms.includes(algo.key) && "Coming Soon"}
                         </motion.li>

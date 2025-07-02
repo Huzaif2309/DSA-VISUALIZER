@@ -9,7 +9,7 @@ const DSAChatbot = () => {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      content: "Welcome to my DSA classroom. I'm here to teach you Data Structures and Algorithms - nothing else. Ask me about arrays, trees, graphs, sorting, searching, time complexity, or any other DSA topic. Don't waste my time with irrelevant questions.",
+      content: "Welcome to my DSA classroom. I'm here to teach you Data Structures and Algorithms. Ask me about arrays, trees, graphs, sorting, searching, time complexity, or any other DSA topic.",
       isUser: false
     }
   ]);
@@ -253,7 +253,7 @@ For non-DSA questions, I'll politely redirect:
                 </div>
                 <div>
                   <h3 className="font-bold text-lg">DSA Instructor</h3>
-                  <p className="text-sm opacity-90">"No nonsense. No fluff. Just algorithms."</p>
+                  <p className="text-sm opacity-90">"Your Personal Friendly DSA Chatbot"</p>
                 </div>
               </div>
               <button
@@ -267,7 +267,7 @@ For non-DSA questions, I'll politely redirect:
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               <div className="p-3 bg-yellow-900 bg-opacity-50 border border-yellow-600 rounded-lg text-yellow-300 text-sm text-center">
-                ⚠️ This instructor only answers DSA-related questions. Ask anything else at your own risk!
+                ⚠️ This instructor only answers DSA-related questions.
               </div>
               {messages.map((message) => (
                 <div

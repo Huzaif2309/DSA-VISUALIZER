@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { sendFeedbackMail } = require('./utils/mailer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,7 +33,7 @@ app.post('/api/chat', async (req, res) => {
                 },
                 {
                     role: "model",
-                    parts: [{ text: "Understood. I will strictly focus on DSA topics and reject all other queries with a rude response." }]
+                    parts: [{ text: "Understood. I will strictly focus on DSA topics and reject all other queries with a polite response." }]
                 }
             ],
             generationConfig: {
@@ -52,6 +53,18 @@ app.post('/api/chat', async (req, res) => {
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ error: 'An error occurred while processing your request' });
+    }
+});
+
+// Feedback/Contact form endpoint using modular mailer
+app.post('/api/send-feedback', async (req, res) => {
+    const { name, email, message } = req.body;
+    try {
+        await sendFeedbackMail({ name, email, message });
+        res.json({ success: true });
+    } catch (err) {
+        console.error('❌ Error sending feedback:', err.message);
+        res.status(500).json({ success: false, error: err.message });
     }
 });
 

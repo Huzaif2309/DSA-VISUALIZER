@@ -1,5 +1,5 @@
 import Tilt from 'react-parallax-tilt'
-import { useEffect, useState,useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 import CodeVizImg from '../assets/software-dev.jpg'
 import sorting from '../assets/sorting.gif'
 import Graph from '../assets/Graph.gif'
@@ -67,7 +67,33 @@ function Home({setAlgorithm}) {
     visible: { opacity: 1, scale: 1, transition: { duration: 1.2 } },
   };
 
- 
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState('');
+
+  // Handle input changes
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSent(false);
+    try {
+      const res = await fetch('http://localhost:3000/api/send-feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error('Failed to send feedback');
+      setSent(true);
+      setForm({ name: '', email: '', message: '' });
+    } catch (err) {
+      setError('Could not send feedback. Please try again later.');
+    }
+  };
+
   return (
     <div className='flex flex-col scroll-smooth gap-30 md:gap-80 overflow-hidden pb-10 md:pb-5 '>
       <motion.div style={{ backgroundImage, boxShadow }} className='flex flex-col justify-between w-[100%] m-auto md:flex-row  md:h-[88vh]' >
@@ -449,7 +475,7 @@ function Home({setAlgorithm}) {
               </div>
 
               <button className='mt-6 group flex items-center text-purple-400 font-medium '>
-                <span>Dynamic programming <strong className='text-red-500'>(coming soon)</strong></span>
+                <span>Dynamic programming</span>
                 <ArrowRight className='ml-2 h-4 w-4 transition-transform group-hover:translate-x-1' />
               </button>
             </motion.div>
@@ -746,14 +772,46 @@ function Home({setAlgorithm}) {
                 transition={{ duration: 0.7,}} 
                 style={{ border, boxShadow, }} className='relative rounded-2xl'>
                   <div className='relative rounded-2xl overflow-hidden'>
-                    <form action="" className='flex flex-col'>
-                      <div className='flex flex-col gap-5 justify-center items-center container m-auto w-[90%]  my-5'>
-                        <input type="text" className='h-[2.5rem] outline-none shadow shadow-pink-800 text-gray-500 w-full rounded-md p-4' placeholder='Your Name' />
-                        <input type="email" className='h-[2.5rem] outline-none shadow  shadow-pink-800  text-gray-500 w-full rounded-md p-4' placeholder='Your Email' />
-                        <textarea name="" id="" cols="20" rows="5" placeholder='Your Feedback' className='w-full text-gray-500 p-4 outline-none shadow shadow-pink-800 rounded-md'></textarea>
-                        <input type="submit" value='Submit' className='cursor-pointer p-2 rounded-2xl text-white text-xl w-[50%] md:w-[30%] shadow-amber-100 shadow' />
-                      </div>
-                    </form>
+                    <form onSubmit={handleSubmit} className='flex flex-col'>
+          <div className='flex flex-col gap-5 justify-center items-center container m-auto w-[90%]  my-5'>
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              className='h-[2.5rem] outline-none shadow shadow-pink-800 text-gray-500 w-full rounded-md p-4'
+              placeholder='Your Name'
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              className='h-[2.5rem] outline-none shadow  shadow-pink-800  text-gray-500 w-full rounded-md p-4'
+              placeholder='Your Email'
+              required
+            />
+            <textarea
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              cols="20"
+              rows="5"
+              placeholder='Your Feedback'
+              className='w-full text-gray-500 p-4 outline-none shadow shadow-pink-800 rounded-md'
+              required
+            ></textarea>
+            <input
+              type="submit"
+              value={sent ? 'Sent!' : 'Submit'}
+              className='cursor-pointer p-2 rounded-2xl text-white text-xl w-[50%] md:w-[30%] shadow-amber-100 shadow'
+              disabled={sent}
+            />
+            {error && <div className="text-red-500">{error}</div>}
+            {sent && <div className="text-green-500">Thank you for your feedback!</div>}
+          </div>
+        </form>
                   </div>
                 </motion.div>
               </div>
