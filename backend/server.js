@@ -16,7 +16,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // API endpoint for chat
 app.post('/api/chat', async (req, res) => {
-    return res.status(503).json({ error: 'Service is temporarily paused. Try again later.' });
+    // return res.status(503).json({ error: 'Service is temporarily paused. Try again later.' });//remove on pushing it
     try {
         const { message, systemInstruction } = req.body;
         

@@ -5,7 +5,7 @@ import { mergeSortGenerator } from './SortingAlgorithms/mergeSort.js'
 import { quickSortGenerator } from './SortingAlgorithms/quickSort.js'
 import { linearSearchGenerator } from './SearchingAlgorithms/linearSearch.js'
 import { binarySearchGenerator } from './SearchingAlgorithms/binarySearch.js'
-
+import { knapsackGenerator } from './DynamicProgramming/knapsack.js'          
 const algorithmGenerator = {
     "Bubble Sort": bubbleSortGenerator,
     "Selection Sort": selectionSortGenerator,
@@ -14,6 +14,7 @@ const algorithmGenerator = {
     "Quick Sort": quickSortGenerator,
     "Linear Search": linearSearchGenerator,
     "Binary Search": binarySearchGenerator,
+    "Knapsack": knapsackGenerator,
 }
 
 const handleAlgorithm = {
@@ -62,8 +63,20 @@ const handleAlgorithm = {
     },
 
 
-    handleInput: (input, setArr, algorithm, setSteps, setCurrentStep, setIsPlaying,searchTarget=null) => {
-        const parsedArray = input.split(" ").map(Number).filter((n) => !isNaN(n));
+    handleInput: (input, setArr, algorithm, setSteps, setCurrentStep, setIsPlaying, extraParam) => {
+        if (algorithm[0] === "Knapsack") {
+            // input is already an array of {weight, value}
+            console.log("Knapsack input:", input, "capacity:", extraParam);
+            setArr(input); 
+            const allSteps = [...knapsackGenerator(input, extraParam)];
+            setSteps(allSteps);
+            setCurrentStep(0);
+            setIsPlaying(false);
+            return;
+        }
+        const parsedArray = typeof input === "string"
+            ? input.split(" ").map(Number).filter((n) => !isNaN(n))
+            : [];
         if(algorithm.includes("Linear Search") || algorithm.includes("Binary Search")){
             const isSorted = parsedArray.every((val,i,array)=>i===0 || array[i-1]<=val);
                  if(!isSorted){

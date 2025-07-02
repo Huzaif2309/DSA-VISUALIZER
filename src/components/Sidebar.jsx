@@ -25,37 +25,15 @@ function Sidebar({ algorithm, setAlgorithm, raceMode, setRaceMode,setAlgorithmTy
         { name: "Binary Search", key: "Binary Search" },
     ];
 
-     const graphAlgoList = [
-        { name: "BFS", key: "BFS" },
-        { name: "DFS", key: "DFS" },
-        { name: "Dijkstra's,", key: "Dijkstra's" },
-        { name: "Prim's", key: "Prim's" },
-        { name: "Kruskal's", key: "Kruskal's" },
-    ];
     const dyanamicProgrammingAlgoList = [
-        { name: "Fibonacci", key: "Fibonacci" },
         { name: "Knapsack", key: "Knapsack" },
-        { name: "LCS", key: "LCS" },
-        { name: "LIS ", key: "LIS " },
-    ];
-
-    const greedygAlgoList = [
-        { name: "Activity Selection", key: "Activity Selection" },
-        { name: "Huffman Coding", key: "Huffman Coding" },
-    ];
-    const backtrackingAlgoList = [
-        { name: "N-Queens", key: "N-Queens" },
-        { name: "Sudoku Solver", key: "Sudoku Solver" },
-    ];
-    const treeAlgoList = [
-        { name: "Tree Traversals", key: "Tree Traversals" },
-        { name: "BST Operations", key: "BST Operations" },
-        { name: " AVL Rotations", key: " AVL Rotations" },
-        { name: "LCA", key: "LCA" },
     ];
 
     const supportedAlgorithms = [
-        "Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort", "Quick Sort","Linear Search","Binary Search","Array","Stack","Linked List"];
+        "Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort", "Quick Sort",
+        "Linear Search", "Binary Search", "Array", "Stack", "Linked List", "Queue",
+        "Knapsack", "N-Queens"
+    ];
 
     const handleAlgorithmSelection = (algokey) => {
         if (!supportedAlgorithms.includes(algokey)) {
@@ -143,6 +121,9 @@ function Sidebar({ algorithm, setAlgorithm, raceMode, setRaceMode,setAlgorithmTy
             <button className="p-1 rounded-md text-gray-700 hover:bg-gray-900 hover:text-white cursor-pointer transition" initial={{ opacity: 0, y: -10 }} animate={{ opacity: dataStructureDropdown ? 1 : 0, y: dataStructureDropdown ? 0 : -10 }} onClick={() => { setAlgorithmType("stack");  setAlgorithm([]); setRaceMode(false); handleAlgorithmSelection("Stack") }}>
                 Stack
             </button>
+            <button className="p-1 rounded-md text-gray-700 hover:bg-gray-900 hover:text-white cursor-pointer transition" initial={{ opacity: 0, y: -10 }} animate={{ opacity: dataStructureDropdown ? 1 : 0, y: dataStructureDropdown ? 0 : -10 }} onClick={() => { setAlgorithmType("queue"); setAlgorithm([]); setRaceMode(false); handleAlgorithmSelection("Queue") }}>
+                Queue
+            </button>
             <button  className="p-1 rounded-md text-gray-700 hover:bg-gray-900 hover:text-white cursor-pointer transition" initial={{ opacity: 0, y: -10 }} animate={{ opacity: dataStructureDropdown ? 1 : 0, y: dataStructureDropdown ? 0 : -10 }} onClick={() => { setAlgorithmType("linkedlist"); setAlgorithm([]); setRaceMode(false); handleAlgorithmSelection("Linked List") }}>
                 Linked List
             </button>
@@ -151,11 +132,11 @@ function Sidebar({ algorithm, setAlgorithm, raceMode, setRaceMode,setAlgorithmTy
             </button>
             </motion.div>
 
-            <button className="border p-2 w-[100%] bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow shadow-pink-900 rounded-md cursor-pointer" onClick={() =>{ setGraphDropdown(!graphDropdown);}}>
+            {/* <button className="border p-2 w-[100%] bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow shadow-pink-900 rounded-md cursor-pointer" onClick={() =>{ setGraphDropdown(!graphDropdown);}}>
             Graph Algorithms <strong className="text-[10px]">(coming soon)</strong>
-            </button>
+            </button> */}
 
-            <motion.ul
+            {/* <motion.ul
                 initial={false}
                 animate={{ height: graphDropdown ? "auto" : "0px", opacity: graphDropdown ? 1 : 0 }}
                 transition={{ duration: 0.5 }}
@@ -173,10 +154,10 @@ function Sidebar({ algorithm, setAlgorithm, raceMode, setRaceMode,setAlgorithmTy
                             {algo.name} {!supportedAlgorithms.includes(algo.key) && "Coming Soon"}
                         </motion.li>
                     ))}
-            </motion.ul>
+            </motion.ul> */}
 
-            <button className="border p-2 w-[100%] bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow shadow-pink-900 rounded-md cursor-pointer" onClick={() =>{ setDynamicProgrammingDropdown(!dynamicProgrammingDropdown);}}>
-            Dynamic Programming <strong className="text-[10px]">(coming soon)</strong>
+            <button className="border p-2 w-[100%] bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow shadow-pink-900 rounded-md cursor-pointer" onClick={() =>{ setDynamicProgrammingDropdown(!dynamicProgrammingDropdown); setAlgorithmType("dp"); setAlgorithm([]); setSortDropdown(false); setSearchDropdown(false); setDataStructureDropdown(false); setRaceMode(false);}}>
+            Dynamic Programming
             </button>
 
             <motion.ul
@@ -191,78 +172,6 @@ function Sidebar({ algorithm, setAlgorithm, raceMode, setRaceMode,setAlgorithmTy
                             key={algo.key}
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: dynamicProgrammingDropdown ? 1 : 0, y: dynamicProgrammingDropdown ? 0 : -10 }}
-                            onClick={() => handleAlgorithmSelection(algo.key)}
-                            className={` p-2 rounded-md  text-gray-700 hover:bg-gray-900 hover:text-white  cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : "hover:bg-gray-100"} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
-                        >
-                            {algo.name} {!supportedAlgorithms.includes(algo.key) && "Coming Soon"}
-                        </motion.li>
-                    ))}
-            </motion.ul>
-
-            <button className="border p-2 w-[100%] bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow shadow-pink-900 rounded-md cursor-pointer" onClick={() =>{ setGreedyDropdown(!greedyDropdown);}}>
-            Greedy Algorithms <strong className="text-[10px]">(coming soon)</strong>
-            </button>
-
-            <motion.ul
-                initial={false}
-                animate={{ height: greedyDropdown ? "auto" : "0px", opacity: greedyDropdown ? 1 : 0 }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-col gap-5 rounded-md overflow-hidden"
-            >
-                {
-                    greedygAlgoList.map((algo) => (
-                        <motion.li
-                            key={algo.key}
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: greedyDropdown ? 1 : 0, y: greedyDropdown ? 0 : -10 }}
-                            onClick={() => handleAlgorithmSelection(algo.key)}
-                            className={` p-2 rounded-md  text-gray-700 hover:bg-gray-900 hover:text-white  cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : "hover:bg-gray-100"} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
-                        >
-                            {algo.name} {!supportedAlgorithms.includes(algo.key) && "Coming Soon"}
-                        </motion.li>
-                    ))}
-            </motion.ul>
-
-            <button className="border p-2 w-[100%] bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow shadow-pink-900 rounded-md cursor-pointer" onClick={() =>{ setBacktrackingDropdown(!backtrackingDropdown);}}>
-            Backtracking Algorithms <strong className="text-[10px]">(coming soon)</strong>
-            </button>
-
-            <motion.ul
-                initial={false}
-                animate={{ height: backtrackingDropdown ? "auto" : "0px", opacity: backtrackingDropdown ? 1 : 0 }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-col gap-5 rounded-md overflow-hidden"
-            >
-                {
-                    backtrackingAlgoList.map((algo) => (
-                        <motion.li
-                            key={algo.key}
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: backtrackingDropdown ? 1 : 0, y: backtrackingDropdown ? 0 : -10 }}
-                            onClick={() => handleAlgorithmSelection(algo.key)}
-                            className={` p-2 rounded-md  text-gray-700 hover:bg-gray-900 hover:text-white  cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : "hover:bg-gray-100"} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
-                        >
-                            {algo.name} {!supportedAlgorithms.includes(algo.key) && "Coming Soon"}
-                        </motion.li>
-                    ))}
-            </motion.ul>
-
-            <button className="border p-2 w-[100%] bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow shadow-pink-900 rounded-md cursor-pointer" onClick={() =>{ setTreeDropdown(!treeDropdown);}}>
-            Tree Algorithms <strong className="text-[10px]">(coming soon)</strong>
-            </button>
-
-            <motion.ul
-                initial={false}
-                animate={{ height: treeDropdown ? "auto" : "0px", opacity: treeDropdown ? 1 : 0 }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-col gap-5 rounded-md overflow-hidden"
-            >
-                {
-                    treeAlgoList.map((algo) => (
-                        <motion.li
-                            key={algo.key}
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: treeDropdown ? 1 : 0, y: treeDropdown ? 0 : -10 }}
                             onClick={() => handleAlgorithmSelection(algo.key)}
                             className={` p-2 rounded-md  text-gray-700 hover:bg-gray-900 hover:text-white  cursor-pointer transition ${isSelected(algo.key) ? "bg-green-300 text-black! text-[.9rem] hover:bg-green-400" : "hover:bg-gray-100"} ${!supportedAlgorithms.includes(algo.key) ? "opacity-50 cursor-not-allowed" : ""}`}
                         >

@@ -736,7 +736,6 @@ function Home({setAlgorithm}) {
                     Empowering developers with interactive data structure visualizations and comprehensive learning resources.
                   </p>
                 </div>
-
               </div>
 
               <div className=' w-full md:w-1/2 mt-7 md:mt-22'>

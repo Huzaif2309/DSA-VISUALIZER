@@ -22,9 +22,17 @@ function RenderBars({ arr, steps, currentStep,raceMode,algorithm,algorithmType, 
   const barSpacing = 50;
   const boxSize = 60;
   const gap = 10;
-  const baseHeight = 200 + arr.length * 10;
+  
+  // Fixed height calculation to prevent overflow
+  const maxBarHeight = raceMode && algorithm.length >= 2 ? 120 : 180; // Reduced height for race mode
+  const topPadding = 60; // Space for text above bars
+  const bottomPadding = 60; // Space for indices below bars
+  const leftPadding = 30; // Left margin to prevent touching border
+  const rightPadding = 30; // Right margin to prevent touching border
+  const totalSVGHeight = maxBarHeight + topPadding + bottomPadding;
+  const totalSVGWidth = (arr.length * (viewMode === "bars" ? barSpacing : (boxSize + gap))) + leftPadding + rightPadding;
   const maxValue = arr.length > 0 ? Math.max(...arr) : 1;
-  const scale = baseHeight / maxValue
+  const scale = maxBarHeight / maxValue; // Scale bars to fit within maxBarHeight
 
   const getColor = (index, current) => {
     if(algorithmType ==="searching"){
@@ -46,7 +54,7 @@ function RenderBars({ arr, steps, currentStep,raceMode,algorithm,algorithmType, 
     const isFound = current.found !== -1;
 
   return (
-    <div className="relative flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center h-full overflow-hidden">
       <button className={`shadow mt-2 active:scale-90 shadow-gray-500 font-semibold text-green-700 hover:text-yellow-600 hover:shadow-gray-400 ${algorithm.length>=2?" md:mt-1 absolute top-[-30px] right-0 md:top-0 md:relative py-1 mt-1 md:px-4 md:py-2 px-2 text-[10px]":"px-4 py-2"}  rounded-2xl cursor-pointer`} onClick={() => setViewMode(viewMode === "bars" ? 'box' : 'bars')}>{viewMode==='bars'?'Box':'Bars'}</button>
 
             {algorithmType === "searching" && isSearchComplete && (
@@ -70,74 +78,61 @@ function RenderBars({ arr, steps, currentStep,raceMode,algorithm,algorithmType, 
                 </motion.div>
             )}
       
-      <svg className={`p-2 w-full ${algorithm.length==2?"flex-row h-[20vh]":"flex-col"} ${raceMode && algorithm.length==3?"h-[15vh]  lg:h-[60vh] ":"h-[26vh] lg:h-[60vh]"} `}
-        viewBox={`0 0 ${(arr.length * (viewMode === "bars" ? barSpacing : (boxSize + gap)))} ${baseHeight + 50}`}
-      >
-        {
-          current.array.map((value, index) => (
-            <g key={index}>
-              {viewMode === "bars" ? (
-                <motion.rect
-                  x={index * barSpacing}
-                  y={baseHeight - value * scale}
-                  width={barWidth}
-                  rx={5} ry={5}
-                  height={value * scale}
-                  fill={getColor(index, current)}
-                  transition={{ duration: 0.3, ease: 'linear' }}
-                />
-              ) : (
-                <motion.rect
-                  x={index * (boxSize + gap)}
-                  y={130}
-                  width={boxSize}
-                  height={boxSize}
-                  rx={10} ry={10}
-                  fill={getColor(index, current)}
-                  transition={{ duration: 0.3, ease: 'linear' }}
-                />
-              )}
-              <text
-                x={index * (viewMode === "bars" ? barSpacing : (boxSize + gap)) + (viewMode === "bars" ? barWidth / 2 : boxSize / 2)}
-                y={viewMode === "bars" ? baseHeight - 4 : 170}
-                textAnchor="middle"
-                fill="yellow"
-                fontWeight='bold'
-                fontSize={25}
-              >
-                {value}
-              </text>
-              <text
-                x={index * (viewMode === "bars" ? barSpacing : (boxSize + gap)) + (viewMode === "bars" ? barWidth / 2 : boxSize / 2)}
-                y={viewMode === "bars" ? baseHeight + 25 : boxSize + 160}
-                textAnchor="middle"
-                fill="white"
-                fontWeight='bold'
-                fontSize={20}
-              >
-                {index}
-              </text>
-
-            </g>
-          ))
-        }
-      </svg>
-      <ul className="absolute bottom-2 text-white flex justify-center gap-2 text-[4px] sm:left-5 sm:text-[9px] left-3 lg:left-5 lg:gap-10 md:text-[9px]">
-        {algorithmType === "searching" ? (
-      <>
-       <li>🔴 Current</li>
-        <li>🟠 Mid</li>
-        <li>🟣 Range</li>
-        <li>🟢 Found</li>
-      </>
-        ) : (
-      <>
-        <li>🔴 Compared</li>
-        <li>🟠 Swapped</li>
-        <li>🟢 Sorted</li>
-      </>
-      )}
-      </ul>
+      {/* Add a scrollable container for the SVG */}
+      <div className={`w-full ${algorithm.length==2?"flex-row":"flex-col"} ${raceMode && algorithm.length==3?"h-[15vh] lg:h-[50vh]":"h-[26vh] lg:h-[50vh]"} overflow-auto`}>
+        <svg className="p-2 w-full h-full"
+          viewBox={`0 0 ${totalSVGWidth} ${totalSVGHeight}`}
+          preserveAspectRatio="xMidYMid meet"
+        >
+          {
+            current.array.map((value, index) => (
+              <g key={index}>
+                {viewMode === "bars" ? (
+                  <motion.rect
+                    x={leftPadding + index * barSpacing} // Add left padding
+                    y={topPadding + maxBarHeight - value * scale} // Start from topPadding + maxBarHeight and go upward
+                    width={barWidth}
+                    rx={5} ry={5}
+                    height={value * scale}
+                    fill={getColor(index, current)}
+                    transition={{ duration: 0.3, ease: 'linear' }}
+                  />
+                ) : (
+                  <motion.rect
+                    x={leftPadding + index * (boxSize + gap)} // Add left padding
+                    y={topPadding + (maxBarHeight - boxSize) / 2} // Center the box vertically
+                    width={boxSize}
+                    height={boxSize}
+                    rx={10} ry={10}
+                    fill={getColor(index, current)}
+                    transition={{ duration: 0.3, ease: 'linear' }}
+                  />
+                )}
+                <text
+                  x={leftPadding + index * (viewMode === "bars" ? barSpacing : (boxSize + gap)) + (viewMode === "bars" ? barWidth / 2 : boxSize / 2)} // Add left padding
+                  y={viewMode === "bars" ? topPadding + maxBarHeight - value * scale - 10 : topPadding + (maxBarHeight - boxSize) / 2 + boxSize / 2 + 8} // Position text above bars or center in box
+                  textAnchor="middle"
+                  fill="yellow"
+                  fontWeight='bold'
+                  fontSize={25}
+                >
+                  {value}
+                </text>
+                <text
+                  x={leftPadding + index * (viewMode === "bars" ? barSpacing : (boxSize + gap)) + (viewMode === "bars" ? barWidth / 2 : boxSize / 2)} // Add left padding
+                  y={topPadding + maxBarHeight + 35} // Position indices below the bars/boxes
+                  textAnchor="middle"
+                  fill="white"
+                  fontWeight='bold'
+                  fontSize={20}
+                >
+                  {index}
+                </text>
+              </g>
+            ))
+          }
+        </svg>
+      </div>
     </div>
   )
 }

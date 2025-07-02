@@ -79,11 +79,57 @@ end procedure`,
         end if
     end while
     return -1
+end procedure`,
+    "Knapsack": `procedure knapsack(items, capacity)
+    n = length(items)
+    create dp[0..n][0..capacity] and initialize to 0
+    for i = 1 to n:
+        for w = 1 to capacity:
+            if items[i-1].weight <= w:
+                dp[i][w] = max(
+                    items[i-1].value + dp[i-1][w - items[i-1].weight],
+                    dp[i-1][w]
+                )
+            else:
+                dp[i][w] = dp[i-1][w]
+    return dp[n][capacity]
 end procedure`
 };
 
 function Pseudocode({ algorithm }) {
-    if (!algorithm || !pseudocode[algorithm]) return null;
+    if (!algorithm) return null;
+
+    // Special case for Knapsack: show formula and explanation
+    if (algorithm === "Knapsack") {
+        return (
+            <div className="shadow-md mt-2 shadow-white p-2 w-[95%] mb-3 md:w-[90%] m-auto rounded-lg">
+                <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 lg:mb-2 flex items-center">
+                    <Code className='inline-block mr-1 text-purple-500'/>  0/1 Knapsack DP Formula
+                </h3>
+                <div className="text-white font-mono text-[10px] mb-2">
+                    <strong>DP Formula:&nbsp;</strong>
+                    <span>
+                        dp[i][w] = max(dp[i-1][w], value<sub>i-1</sub> + dp[i-1][w-weight<sub>i-1</sub>]) if weight<sub>i-1</sub> ≤ w<br />
+                        dp[i][w] = dp[i-1][w] otherwise
+                    </span>
+                </div>
+                <pre className="text-white font-mono text-[9px] lg:text-[10px] whitespace-pre-wrap overflow-x-auto mb-2">
+                    {pseudocode["Knapsack"]}
+                </pre>
+                <div className="text-white text-xs mt-2">
+                    <span className="font-semibold text-blue-300">Explanation:</span>
+                    <ul className="list-disc ml-5">
+                        <li>For each item, decide to include it or not, based on maximizing value.</li>
+                        <li><b>dp[i][w]</b> is the max value for first <b>i</b> items and capacity <b>w</b>.</li>
+                        <li>If item fits, take the max of including or excluding it.</li>
+                        <li>Otherwise, skip the item.</li>
+                    </ul>
+                </div>
+            </div>
+        );
+    }
+
+    if (!pseudocode[algorithm]) return null;
 
     return (
         <div className="shadow-md mt-2 shadow-white p-2 w-[95%] mb-3 md:w-[90%] m-auto rounded-lg">

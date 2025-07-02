@@ -2,7 +2,7 @@
 
 
 .home{
-    background-image: url(./assets/download.png);
+    background: linear-gradient(135deg, #5d0505 0%, #000000 50%, #590707 100%);
 }
 
 .box::before {

@@ -1,8 +1,9 @@
 import { Play, Pause, UndoDot, RedoDot, RotateCcw, LayoutDashboard,X } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import handleAlgorithm from "./handleAlgorithm";
 
-function Controller({ input, setInput, speed, setSpeed, isPlaying, setIsPlaying, currentStep, setCurrentStep, steps, algorithm, handleInput, raceMode, raceCurrentSteps, setRaceCurrentSteps, raceSteps,winner,searchTarget,setSearchTarget,algorithmType,stack, setStack,list, setList }) {
+function Controller({ input, setInput, speed, setSpeed, isPlaying, setIsPlaying, currentStep, setCurrentStep, steps, algorithm, handleInput, raceMode, raceCurrentSteps, setRaceCurrentSteps, raceSteps, winner, searchTarget, setSearchTarget, algorithmType, stack, setStack, list, setList, arr, setArr,setSteps }) {
 
   const [showLeaderboard, setShowLeaderboard] = useState(false); 
   const [stackInput, setStackInput] = useState(""); 
@@ -145,6 +146,60 @@ function Controller({ input, setInput, speed, setSpeed, isPlaying, setIsPlaying,
                         </div>
                     </div>
                 )}
+                {algorithmType === "dp" && algorithm[0] === "Knapsack" && (
+  <div className="flex flex-col gap-2">
+    <input
+      type="text"
+      value={input}
+      placeholder="Enter items as w,v w,v ..."
+      onChange={e => setInput(e.target.value)}
+      className="rounded-md p-2 outline-none text-pink-700 font-semibold shadow shadow-pink-900"
+    />
+    <input
+      type="number"
+      value={searchTarget || ""}
+      placeholder="Capacity"
+      onChange={e => setSearchTarget(Number(e.target.value))}
+      className="rounded-md p-2 outline-none text-pink-700 font-semibold shadow shadow-pink-900"
+    />
+    <button
+      className="p-2 mt-2 border border-blue-500 bg-blue-500 text-white active:bg-blue-600 rounded-md cursor-pointer"
+      onClick={() => {
+        // Parse items input: "2,3 1,2 3,4" => [{weight:2,value:3}, ...]
+        const items = input
+        .trim()
+        .split(/\s+/)
+        .map(pair => {
+          const [w, v] = pair.split(",").map(Number);
+          return { weight: w, value: v };
+        })
+        .filter(item =>
+          Number.isFinite(item.weight) &&
+          Number.isFinite(item.value) &&
+          item.weight > 0 &&
+          item.value >= 0
+        );
+
+        const cap = Number(searchTarget);
+        if (!items.length || isNaN(cap) || cap < 0) {
+            alert("Please enter valid items and capacity!");
+            return;
+        }
+        handleAlgorithm.handleInput(
+          items,
+          setArr,
+          algorithm,
+          setSteps,
+          setCurrentStep,
+          setIsPlaying,
+          Number(searchTarget)
+        );
+      }}
+    >
+      Apply
+    </button>
+  </div>
+)}
         </div>
          {(algorithmType === "sorting" || algorithmType === "searching") && (
                 <>

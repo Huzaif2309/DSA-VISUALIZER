@@ -2,9 +2,11 @@ import { motion, AnimatePresence } from "motion/react"
 
 function Stack({ stack }) {
     return (
-        <div className='flex flex-col items-center p-2 h-full rounded-xl'>
-             <div className="bg-clip-text text-transparent p-1 rounded-xl  bg-gradient-to-r text-2xl from-purple-400 via-green-500 to-white font-bold mb-4 md:mb-15">The length of Stack : {stack.length}</div>
-            <div className='flex flex-col-reverse pt-10 gap-3 lg:w-[50%] md:w-[60%] w-[80%] h-[44vh] md:h-[60vh] overflow-auto p-4 shadow-md shadow-pink-800 rounded-lg'>
+        <div className='flex flex-col items-center p-2 h-full rounded-xl w-full'>
+            <div className="bg-clip-text text-transparent p-1 rounded-xl bg-gradient-to-r text-2xl from-purple-400 via-green-500 to-white font-bold mb-4">
+                The length of Stack : {stack.length}
+            </div>
+            <div className='flex flex-col-reverse gap-3 w-full max-w-[500px] h-full max-h-[48vh] overflow-auto p-2 shadow-md shadow-pink-800 rounded-lg'>
                 <AnimatePresence mode="popLayout">
                     {stack.length === 0 ? (
                         <motion.p
@@ -23,7 +25,6 @@ function Stack({ stack }) {
                                         type: "spring",
                                         stiffness: 300,
                                         damping: 25,
-                                        // delay: index * 0.1
                                     }
                                 }}
                                 exit={{
@@ -39,17 +40,15 @@ function Stack({ stack }) {
                                     scale: 1.02,
                                     transition: { duration: 0.2 }
                                 }}
-                                className="bg-gradient-to-r  from-blue-600 text-3xl to-blue-400 text-white font-bold p-4 rounded-lg text-center shadow-lg shadow-blue-500/20 backdrop-blur-sm"
+                                className="bg-gradient-to-r from-blue-600 to-blue-400 text-3xl text-white font-bold p-4 rounded-lg text-center shadow-lg shadow-blue-500/20 backdrop-blur-sm"
                             >
                                 {item}
                             </motion.div>
-
                         ))
                     )}
-                </AnimatePresence >
-
-            </div >
-        </div >
+                </AnimatePresence>
+            </div>
+        </div>
     );
 }
 
