@@ -824,9 +824,12 @@ function Home({setAlgorithm}) {
             </div>
           </motion.div>
         </Tilt>
+       
       </div>
     </div>
   )
 }
 
 export default Home
+
+
