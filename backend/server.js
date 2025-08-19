@@ -15,6 +15,10 @@ app.use(express.static('public'));
 // Initialize Google Generative AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+if (!process.env.GEMINI_API_KEY) {
+    console.warn('⚠️  GEMINI_API_KEY is not set. The /api/chat endpoint will fail until it is configured.');
+}
+
 // API endpoint for chat
 app.post('/api/chat', async (req, res) => {
     // return res.status(503).json({ error: 'Service is temporarily paused. Try again later.' });//remove on pushing it

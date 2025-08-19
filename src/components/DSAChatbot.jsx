@@ -138,7 +138,9 @@ For non-DSA questions, I'll politely redirect:
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
+      const apiBaseUrl =
+        import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? 'http://localhost:3000' : window.location.origin);
+      const response = await fetch(`${apiBaseUrl}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

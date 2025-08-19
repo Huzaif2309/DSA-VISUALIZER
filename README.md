@@ -64,3 +64,20 @@ Introduce dark mode and custom themes.
 
 ## Code Highlighter
 introduce the algo pueodo code highliter 
+
+## Environment Variables
+
+Create a `.env` file in the project root for the frontend and `backend/.env` for the server.
+
+```dotenv
+# frontend (.env)
+VITE_API_URL=http://localhost:3000
+```
+
+```dotenv
+# backend (backend/.env)
+GEMINI_API_KEY=your_gemini_api_key_here
+SMTP_USER=your_gmail_user
+SMTP_PASS=your_gmail_app_password
+FEEDBACK_RECEIVER=receiver@example.com
+```
